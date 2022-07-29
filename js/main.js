@@ -50,8 +50,8 @@ elForm.addEventListener("submit", function(event){
     let findArray = [];
     for (let i = 0; i < newArray.length; i++) {
         if (elInput <= newArray[i].imdbRating){
-            findArray.push(newArray[i])
+            findArray.push(newArray[i]);
         }
     }
     renderMovies(findArray, elMovieWrapper);
-});
+})
