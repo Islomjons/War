@@ -7,12 +7,15 @@ let elInputRating = document.querySelector("#form__rating");
 let elInputCategory = document.querySelector(".form__category");
 let elInputSort = document.querySelector(".form__sorting");
 let elResult = document.querySelector(".result__number");
+let elModalTitle = document.querySelector(".modal__title")
+let elModalBody = document.querySelector(".modal__body")
 let elMoviesTemplate = document.querySelector("#movies__card").content;
 
 
 // Normalize
 let normalizedMovies = moviesArray.map(function(item) {
     return {
+        id: item.imdb_id,
         title: item.Title.toString(),
         categories: item.Categories.split("|"),
         info: item.summary,
@@ -69,6 +72,7 @@ function renderMovies(array, wrapper) {
         moviesTemplate.querySelector(".movies__title").textContent = item.title;
         moviesTemplate.querySelector(".movies__year").textContent = item.year;
         moviesTemplate.querySelector(".movies__rating").textContent = item.rating;
+        moviesTemplate.querySelector(".more__info-btn").dataset.movieId = item.id;
         moviesTemplate.querySelector(".categories").textContent = item.categories;
         moviesTemplate.querySelector(".movies__url").href = item.videoUrl;
 
@@ -126,4 +130,18 @@ elForm.addEventListener("submit", function(event){
     }
    
     renderMovies(filteredArray, elWrapper)
+})
+
+
+elWrapper.addEventListener("click", function(event) {
+   let currentId = event.target.dataset.movieId;
+
+   if(currentId){
+       let findMore = normalizedMovies.find(function(item) {
+           return item.id == currentId
+       })
+
+       elModalTitle.textContent = findMore.title
+       elModalBody.textContent = findMore.info
+   }
 })
